@@ -14,11 +14,8 @@ RUN npm install
 COPY server/ ./server/
 
 # 复制前端代码并构建
-COPY client/package*.json ./client/
-RUN cd client && npm install
-
 COPY client/ ./client/
-RUN cd client && npm run build
+RUN cd client && npm install && npm run build
 
 # 环境变量将通过Railway平台提供
 
