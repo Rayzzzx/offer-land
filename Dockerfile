@@ -20,8 +20,7 @@ RUN cd client && npm install
 COPY client/ ./client/
 RUN cd client && npm run build
 
-# 复制环境配置
-COPY .env ./
+# 环境变量将通过Railway平台提供
 
 # 暴露端口
 EXPOSE 5001
