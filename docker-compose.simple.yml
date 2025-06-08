@@ -1,0 +1,40 @@
+services:
+  # MongoDB 数据库
+  mongodb:
+    image: mongo:7.0
+    container_name: offer-land-db
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: offer-land
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - offer-land-network
+
+  # 应用服务
+  app:
+    build: .
+    container_name: offer-land-app
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      - MONGODB_URI=mongodb://admin:password123@mongodb:27017/offer-land?authSource=admin
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+    depends_on:
+      - mongodb
+    networks:
+      - offer-land-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  offer-land-network:
+    driver: bridge 
