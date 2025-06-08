@@ -15,7 +15,7 @@ COPY server/ ./server/
 
 # 复制前端代码并构建
 COPY client/ ./client/
-RUN cd client && npm install && npm run build
+RUN cd client && npm ci --silent && NODE_OPTIONS="--max-old-space-size=1024" npm run build
 
 # 环境变量将通过Railway平台提供
 
